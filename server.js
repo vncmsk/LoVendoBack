@@ -1,8 +1,20 @@
 
 import Express from "express";
+import { MongoClient } from 'mongodb';
+import Cors from 'cors';
 
+const stringConexion =
+    "mongodb+srv://arincon:admin@proyecto.ip08e.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+
+const client = new MongoClient(stringConexion, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+});
+
+let conexion;
 const app = Express();
 app.use(Express.json());
+app.use(Cors());
 
 
 // SOLICITUD GET - Debo poner la ruta correcta
@@ -10,29 +22,37 @@ app.use(Express.json());
 app.get('/usuarios', (req, res) => {
     console.log('alguien hizo get en la ruta /usuarios');
 
-    // Esto se reemplaza por la consulta a la base de datos.  
-    const usuarios = [
-        { nombre: 'juana', id: '123456789', ciudad: 'Bogotá' },
-        { nombre: 'juana', id: '123456789', ciudad: 'Bogotá' },
-        { nombre: 'juana', id: '123456789', ciudad: 'Bogotá' }
-    ];
-    res.send(usuarios);
+    conexion.collection('usuario').find({}).limit(50).toArray((err, result) => {
+        if (err) {
+            res.status(500).send('Error en la consulta');
+        } else {
+            res.json(result);
+        }
+    });
 });
 
 
 // SOLICITUD POST - Debo poner la ruta correcta
 
 app.post('/usuarios/nuevo', (req, res) => {
-    // Esto se modifica por el codigo para crear en la base de datos.
+    console.log(req);
     const datosUser = req.body;
-    console.log('keys: ', object.keys(datosUser));
+    console.log('llaves: ', Object.keys(datosUser));
     try {
         if (
-            object.keys(datosUser).includes('name') &&
-            object.keys(datosUser).includes('ID') &&
-            object.keys(datosUser).includes('city')
+            Object.keys(datosUser).includes('name') &&
+            Object.keys(datosUser).includes('ID') &&
+            Object.keys(datosUser).includes('city')
         ) {
-            res.sendStatus(200);
+            conexion.collection('usuario').insertOne(datosUser, (err, result) => {
+                if (err) {
+                    console.error(err)
+                    res.sendStatus(500);
+                } else {
+                    console.log(result);
+                    res.sendStatus(200);
+                }
+            });
         } else {
             res.sendStatus(500);
         }
@@ -41,8 +61,23 @@ app.post('/usuarios/nuevo', (req, res) => {
     }
 });
 
-app.listen(5000, () => {
-    console.log('escuchando puerto 5000');
-});
+
+// Conexion a base de datos
+const main = () => {
+
+    client.connect((err, db) => {
+        if (err) {
+            console.error('error conectando a la base de datos')
+            return false
+        }
+        conexion = db.db('listadoUsuarios');
+        console.log('Conexion exitosa');
+        return app.listen(5000, () => {
+            console.log('escuchando puerto 5000');
+        });
+    });
+};
+
+main();
 
 
