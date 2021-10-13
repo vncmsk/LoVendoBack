@@ -4,6 +4,7 @@ import Express from "express";
 const app = Express();
 app.use(Express.json());
 
+
 // SOLICITUD GET - Debo poner la ruta correcta
 
 app.get('/usuarios', (req, res) => {
