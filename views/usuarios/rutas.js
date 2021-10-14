@@ -20,18 +20,18 @@ rutasUsuario.route('/usuarios').get((req, res) => {
 });
 
 // SOLICITUD POST (CREATE) - Debo poner la ruta correcta
-rutasUsuario.route('/usuarios/nuevo').post((req, res) => {
+rutasUsuario.route('/usuarios').post((req, res) => {
     crearUsuarios(req.body, genericCallback(res));
 });
 
 // SOLICITUD PATCH (UPDATE) - Debo poner la ruta correcta
-rutasUsuario.route('/usuarios/editar').patch((req, res) => {
-    editarUsuarios(req.body, genericCallback(res));
+rutasUsuario.route('/usuarios/:id').patch((req, res) => {
+    editarUsuarios(req.params.id, req.body, genericCallback(res));
 });
 
 // SOLICITUD DELETE (DELETE) - Debo poner la ruta correcta
-rutasUsuario.route('/usuarios/eliminar').delete((req, res) => {
-    eliminarUsuarios(req.body.id, genericCallback(res))
+rutasUsuario.route('/usuarios/:id').delete((req, res) => {
+    eliminarUsuarios(req.params.id, genericCallback(res))
 });
 
 export default rutasUsuario;

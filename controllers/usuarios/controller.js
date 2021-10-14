@@ -22,9 +22,8 @@ const crearUsuarios = async (datosUser, callback) => {
 };
 
 // Controller PATCH
-const editarUsuarios = async (edicion, callback) => {
-    const parametroFiltro = { _id: new ObjectId(edicion.id) }
-    delete edicion.id;
+const editarUsuarios = async (id, edicion, callback) => {
+    const parametroFiltro = { _id: new ObjectId(id) }
     const operacion = {
         $set: edicion,
     };
