@@ -1,6 +1,6 @@
 
 import Express from "express";
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 import Cors from 'cors';
 
 const stringConexion =
@@ -17,7 +17,7 @@ app.use(Express.json());
 app.use(Cors());
 
 
-// SOLICITUD GET - Debo poner la ruta correcta
+// SOLICITUD GET (READ) - Debemos poner la ruta correcta
 
 app.get('/usuarios', (req, res) => {
     console.log('alguien hizo get en la ruta /usuarios');
@@ -32,7 +32,7 @@ app.get('/usuarios', (req, res) => {
 });
 
 
-// SOLICITUD POST - Debo poner la ruta correcta
+// SOLICITUD POST (CREATE) - Debo poner la ruta correcta
 
 app.post('/usuarios/nuevo', (req, res) => {
     console.log(req);
@@ -59,6 +59,46 @@ app.post('/usuarios/nuevo', (req, res) => {
     } catch {
         res.sendStatus(500);
     }
+});
+
+
+// SOLICITUD PATCH (UPDATE) - Debo poner la ruta correcta
+
+app.patch('/usuarios/editar', (req, res) => {
+    const edicion = req.body;
+    console.log(edicion);
+    const parametroFiltro = { _id: new ObjectId(edicion.id) }
+    delete edicion.id;
+    const operacion = {
+        $set: edicion,
+    };
+    conexion.collection('usuario')
+        .findOneAndUpdate(parametroFiltro, operacion, { upsert: true, returnOriginal: true }, (err, result) => {
+            if (err) {
+                console.error('Error acualizando el vehiculo', err);
+                res.sendStatus(500);
+            } else {
+                console.log('Actualizado con exito');
+                res.sendStatus(200);
+            }
+
+        });
+});
+
+
+// SOLICITUD DELETE (DELETE) - Debo poner la ruta correcta
+
+app.delete('/usuarios/eliminar', (req, res) => {
+    const parametroFiltro = { _id: new ObjectId(req.body.id) }
+    conexion.collection('usuario').deleteOne(parametroFiltro, (err, resul) => {
+        if (err) {
+            console.error(err);
+            res.sendStatus(500);
+        } else {
+            res.sendStatus(200);
+        }
+
+    });
 });
 
 
