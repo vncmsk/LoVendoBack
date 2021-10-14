@@ -3,6 +3,8 @@ import { queryAllusuarios, crearUsuarios, editarUsuarios, eliminarUsuarios } fro
 
 const rutasUsuario = Express.Router();
 
+
+// creacion funcion callback generica
 const genericCallback = (res) => (err, result) => {
     if (err) {
         res.status(500).send('Error en la consulta');

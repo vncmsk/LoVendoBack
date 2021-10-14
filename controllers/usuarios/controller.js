@@ -22,7 +22,7 @@ const crearUsuarios = async (datosUser, callback) => {
 };
 
 // Controller PATCH
-const editarUsuarios = async (edicion, callback) =>{
+const editarUsuarios = async (edicion, callback) => {
     const parametroFiltro = { _id: new ObjectId(edicion.id) }
     delete edicion.id;
     const operacion = {
@@ -34,7 +34,7 @@ const editarUsuarios = async (edicion, callback) =>{
 };
 
 // Controller DELETE
-const eliminarUsuarios = async (id, callback) =>{
+const eliminarUsuarios = async (id, callback) => {
     const parametroFiltro = { _id: new ObjectId(id) }
     const conexion = getBD();
     await conexion.collection('usuario').deleteOne(parametroFiltro, callback);

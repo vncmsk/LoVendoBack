@@ -27,7 +27,7 @@ const conectarBD = (callback) => {
     });
 };
 
-const getBD = ()=>{
+const getBD = () => {
     return conexion;
 }
 
