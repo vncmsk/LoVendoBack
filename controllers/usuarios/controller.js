@@ -1,10 +1,16 @@
 import { ObjectId } from "mongodb";
 import { getBD } from "../../db/db.js";
 
-// Controller GET
+// Controller GET todos los usuarios
 const queryAllusuarios = async (callback) => {
     const conexion = getBD();
     await conexion.collection('usuario').find({}).limit(50).toArray(callback);
+};
+
+// Controller GET con filtro 
+const consultarUsuarios = async (id, callback) => {
+    const conexion = getBD();
+    await conexion.collection('usuario').findOne({_id: new ObjectId(id)}, callback);
 };
 
 // Controller POST
@@ -39,4 +45,4 @@ const eliminarUsuarios = async (id, callback) => {
     await conexion.collection('usuario').deleteOne(parametroFiltro, callback);
 };
 
-export { queryAllusuarios, crearUsuarios, editarUsuarios, eliminarUsuarios };
+export { queryAllusuarios, crearUsuarios, editarUsuarios, eliminarUsuarios, consultarUsuarios };

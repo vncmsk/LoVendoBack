@@ -1,5 +1,5 @@
 import Express from "express";
-import { queryAllusuarios, crearUsuarios, editarUsuarios, eliminarUsuarios } from "../../controllers/usuarios/controller.js";
+import { queryAllusuarios, crearUsuarios, editarUsuarios, eliminarUsuarios, consultarUsuarios } from "../../controllers/usuarios/controller.js";
 
 const rutasUsuario = Express.Router();
 
@@ -17,6 +17,12 @@ const genericCallback = (res) => (err, result) => {
 rutasUsuario.route('/usuarios').get((req, res) => {
     console.log('alguien hizo get en la ruta /usuarios');
     queryAllusuarios(genericCallback(res));
+});
+
+// SOLICITUD GET CON FILTRO (READ) - Debemos poner la ruta correcta
+rutasUsuario.route('/usuarios/:id').get((req, res) => {
+    console.log('alguien hizo get en la ruta /usuarios');
+    consultarUsuarios(req.params.id, genericCallback(res));
 });
 
 // SOLICITUD POST (CREATE) - Debo poner la ruta correcta
