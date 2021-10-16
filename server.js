@@ -16,6 +16,7 @@ app.use(Cors());
 app.use(rutasUsuario);
 app.use(rutasVendedor);
 app.use(rutasVentas);
+app.use(rutasVentas);
 
 const main = () => {
     return app.listen(process.env.PORT, () => {
