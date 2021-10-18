@@ -16,9 +16,14 @@ const consultarVentas = async (id, callback) => {
 // Controller POST
 const crearVentas = async (datosVenta, callback) => {
     if (
-        Object.keys(datosVenta).includes('name') &&
-        Object.keys(datosVenta).includes('ID') &&
-        Object.keys(datosVenta).includes('city')
+        Object.keys(datosVenta).includes('Fecha') &&
+        Object.keys(datosVenta).includes('Cliente') &&
+        Object.keys(datosVenta).includes('Item') &&
+        Object.keys(datosVenta).includes('Cantidad') &&
+        Object.keys(datosVenta).includes('VrUnit') &&
+        Object.keys(datosVenta).includes('Vendedor') &&
+        Object.keys(datosVenta).includes('Ciudad') &&
+        Object.keys(datosVenta).includes('Estado')
     ) {
         const conexion = getBD();
         await conexion.collection('venta').insertOne(datosVenta, callback);
