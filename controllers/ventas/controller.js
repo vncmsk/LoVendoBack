@@ -10,7 +10,7 @@ const queryAllventas = async (callback) => {
 // Controller GET con filtro 
 const consultarVentas = async (id, callback) => {
     const conexion = getBD();
-    await conexion.collection('venta').findOne({_id: new ObjectId(id)}, callback);
+    await conexion.collection('venta').findOne({ _id: new ObjectId(id) }, callback);
 };
 
 // Controller POST
@@ -34,7 +34,7 @@ const crearVentas = async (datosVenta, callback) => {
 
 // Controller PATCH
 const editarVentas = async (id, edicion, callback) => {
-    const parametroFiltro = { _id: new ObjectId(id) }
+    const parametroFiltro = { _id: new ObjectId(id.trim()) }
     const operacion = {
         $set: edicion,
     };
