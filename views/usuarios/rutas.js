@@ -1,8 +1,8 @@
 import Express from "express";
-import { queryAllusuarios, crearUsuarios, editarUsuarios, eliminarUsuarios, consultarUsuarios } from "../../controllers/usuarios/controller.js";
+import { queryAllusuarios, crearUsuarios, editarUsuarios, eliminarUsuarios, 
+    consultarUsuarios, consultarCrearUsuario } from "../../controllers/usuarios/controller.js";
 
 const rutasUsuario = Express.Router();
-
 
 // creacion funcion callback generica
 const genericCallback = (res) => (err, result) => {
@@ -19,15 +19,21 @@ rutasUsuario.route('/usuarios').get((req, res) => {
     queryAllusuarios(genericCallback(res));
 });
 
+// SOLICITUD POST (CREATE) - Debo poner la ruta correcta
+rutasUsuario.route('/usuarios').post((req, res) => {
+    crearUsuarios(req.body, genericCallback(res));
+});
+
+// SOLICITUD GET CON CONSULTA EN LA BD
+rutasUsuario.route('/usuarios/self').get((req, res) => {
+    console.log('alguien hizo get en la ruta /self');
+    consultarCrearUsuario(req, genericCallback(res));
+});
+
 // SOLICITUD GET CON FILTRO (READ) - Debemos poner la ruta correcta
 rutasUsuario.route('/usuarios/:id').get((req, res) => {
     console.log('alguien hizo get en la ruta /usuarios');
     consultarUsuarios(req.params.id, genericCallback(res));
-});
-
-// SOLICITUD POST (CREATE) - Debo poner la ruta correcta
-rutasUsuario.route('/usuarios').post((req, res) => {
-    crearUsuarios(req.body, genericCallback(res));
 });
 
 // SOLICITUD PATCH (UPDATE) - Debo poner la ruta correcta

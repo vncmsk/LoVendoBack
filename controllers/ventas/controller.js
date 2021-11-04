@@ -17,11 +17,10 @@ const consultarVentas = async (id, callback) => {
 const crearVentas = async (datosVenta, callback) => {
     if (
         Object.keys(datosVenta).includes('Fecha') &&
-        Object.keys(datosVenta).includes('Cliente') &&
+        Object.keys(datosVenta).includes('Vendedor') &&
         Object.keys(datosVenta).includes('Item') &&
         Object.keys(datosVenta).includes('Cantidad') &&
-        Object.keys(datosVenta).includes('VrUnit') &&
-        Object.keys(datosVenta).includes('Vendedor') &&
+        Object.keys(datosVenta).includes('Cliente') &&
         Object.keys(datosVenta).includes('Ciudad') &&
         Object.keys(datosVenta).includes('Estado')
     ) {
