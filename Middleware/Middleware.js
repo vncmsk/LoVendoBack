@@ -13,25 +13,24 @@ const autorizacionUsuario = async (req, res, next) => {
   const conexion = getBD();
   await conexion.collection('usuario').findOne({ email: user.email }, async (err, response) => {
     if (response) {
-      callback(err, response);
+      console.log(response);
 
       //3. verificar estado de usuario
       if (response.estado === 'rechazado') {
 
         //4. si el usuario esta rechazado, devolver error de autenticacion
-        res.sendstatus(402);
+        res.sendstatus(401);
+        res.end();
 
         //5. si el usuario esta pdte o aprobado, ejecutar next
       } else {
         console.log('habilitado');
+        next();      
       }
     }else{
       next();
     }
   });
-
-  //5. si el usuario esta pdte o aprobado, ejecutar next
-  next();
 };
 
 export default autorizacionUsuario;
