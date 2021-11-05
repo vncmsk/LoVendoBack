@@ -2,7 +2,7 @@
   "name": "apilovendo",
   "version": "1.0.0",
   "main": "index.js",
-  "repository": "https://github.com/DiegoSSanabria/BD_LoVendo.com.git",
+  "repository": "https://github.com/vncmsk/LoVendoBack",
   "author": "Andres R <yosmarandres@hotmail.com>",
   "license": "MIT",
   "type": "module",
